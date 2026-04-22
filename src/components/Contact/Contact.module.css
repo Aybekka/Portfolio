@@ -9,7 +9,7 @@
 
 .subtext {
   font-size: 0.975rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   line-height: 1.75;
   margin-top: -32px;
   margin-bottom: 48px;
@@ -46,7 +46,7 @@
 .cardLabel {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -74,7 +74,7 @@
 .footer p {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--color-text-subtle);
+  color: var(--color-text-muted);
   letter-spacing: 0.05em;
 }
 
