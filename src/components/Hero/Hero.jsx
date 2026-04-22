@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-scroll';
 import { motion } from 'framer-motion';
 import styles from './Hero.module.css';
+
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const offset = el.getBoundingClientRect().top + window.scrollY - 80;
+  window.scrollTo({ top: offset, behavior: 'smooth' });
+}
 
 // I keep the roles in an array so it's easy to add or reorder titles without touching the logic
 const ROLES = ['Full Stack Developer', 'React Specialist', 'UI Engineer', 'JavaScript Developer'];
@@ -100,10 +106,7 @@ export default function Hero() {
           animate="visible"
           custom={0.7}
         >
-          {/* react-scroll Link wraps the button so it smooth-scrolls instead of jumping */}
-          <Link to="projects" smooth duration={600} offset={-80}>
-            <button className={styles.btnPrimary}>View Projects</button>
-          </Link>
+          <a href="#projects" className={styles.btnPrimary} onClick={e => { e.preventDefault(); scrollTo('projects'); }}>View Projects</a>
           {/* download attribute tells the browser to save the file rather than open it */}
           <a
             href="/Muhammet_Aybek_Karacag_Fullstack.pdf"
@@ -121,17 +124,16 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.4, duration: 0.6 }}
         >
-          <Link to="about" smooth duration={600} offset={-80}>
+          <a href="#about" aria-label="Scroll down" onClick={e => { e.preventDefault(); scrollTo('about'); }}>
             {/* Looping y animation draws the eye downward without being annoying */}
             <motion.span
               className={styles.arrow}
               animate={{ y: [0, 8, 0] }}
               transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
-              aria-label="Scroll down"
             >
               ↓
             </motion.span>
-          </Link>
+          </a>
         </motion.div>
       </div>
     </section>

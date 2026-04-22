@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './Navbar.module.css';
 
-// I define nav links as a constant array so adding a new section only requires one line here
 const NAV_LINKS = [
   { label: 'About', to: 'about' },
   { label: 'Skills', to: 'skills' },
@@ -12,25 +10,53 @@ const NAV_LINKS = [
   { label: 'Contact', to: 'contact' },
 ];
 
+// Smooth-scroll to a section by id while accounting for the fixed navbar height
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const offset = el.getBoundingClientRect().top + window.scrollY - 80;
+  window.scrollTo({ top: offset, behavior: 'smooth' });
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeId, setActiveId] = useState('');
 
-  // I use { passive: true } because scroll listeners that don't call preventDefault can be optimised by the browser
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Locking body scroll when the mobile menu is open prevents the page from scrolling behind the overlay
+  // IntersectionObserver watches all sections and marks whichever is most in view as active
+  useEffect(() => {
+    const ids = ['hero', ...NAV_LINKS.map(l => l.to)];
+    const observers = ids.map(id => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveId(id); },
+        { rootMargin: '-40% 0px -55% 0px' }
+      );
+      obs.observe(el);
+      return obs;
+    });
+    return () => observers.forEach(obs => obs?.disconnect());
+  }, []);
+
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
+  const handleNav = (e, id) => {
+    e.preventDefault();
+    scrollTo(id);
+    setMenuOpen(false);
+  };
+
   return (
-    // Animating the navbar sliding in on load gives the page a polished first impression
     <motion.header
       className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}
       initial={{ y: -80, opacity: 0 }}
@@ -38,30 +64,24 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <div className={`container ${styles.inner}`}>
-        {/* Clicking the logo scrolls back to the top — a nice UX touch */}
-        <Link to="hero" smooth duration={600} className={styles.logo}>
+        {/* href keeps it crawlable; onClick gives the smooth scroll effect */}
+        <a href="#hero" className={styles.logo} onClick={e => handleNav(e, 'hero')}>
           MAK
-        </Link>
+        </a>
 
         <nav className={styles.nav}>
           {NAV_LINKS.map(link => (
-            // spy + activeClass highlights the link for whichever section is currently in view
-            <Link
+            <a
               key={link.to}
-              to={link.to}
-              smooth
-              duration={600}
-              offset={-80}
-              className={styles.navLink}
-              activeClass={styles.active}
-              spy
+              href={`#${link.to}`}
+              className={`${styles.navLink} ${activeId === link.to ? styles.active : ''}`}
+              onClick={e => handleNav(e, link.to)}
             >
               {link.label}
-            </Link>
+            </a>
           ))}
         </nav>
 
-        {/* The burger button is hidden on desktop via CSS — only visible on mobile */}
         <button
           className={`${styles.burger} ${menuOpen ? styles.open : ''}`}
           onClick={() => setMenuOpen(v => !v)}
@@ -73,7 +93,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* AnimatePresence lets Framer Motion animate the menu out when it closes */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -83,7 +102,6 @@ export default function Navbar() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
           >
-            {/* Staggered entrance for each link makes the mobile menu feel more alive */}
             {NAV_LINKS.map((link, i) => (
               <motion.div
                 key={link.to}
@@ -91,17 +109,13 @@ export default function Navbar() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.06 }}
               >
-                <Link
-                  to={link.to}
-                  smooth
-                  duration={600}
-                  offset={-80}
+                <a
+                  href={`#${link.to}`}
                   className={styles.mobileLink}
-                  // Closing the menu on click avoids the user having to dismiss it manually
-                  onClick={() => setMenuOpen(false)}
+                  onClick={e => handleNav(e, link.to)}
                 >
                   {link.label}
-                </Link>
+                </a>
               </motion.div>
             ))}
           </motion.div>
