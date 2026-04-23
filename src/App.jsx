@@ -6,8 +6,8 @@ import Skills from './components/Skills/Skills';
 import Projects from './components/Projects/Projects';
 import Experience from './components/Experience/Experience';
 import Contact from './components/Contact/Contact';
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 export default function App() {
   return (
@@ -23,6 +23,8 @@ export default function App() {
         <Experience />
         <Contact />
       </main>
+      <Analytics />
+      <SpeedInsights />
     </>
   );
 }
