@@ -1,6 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-  <rect width="48" height="48" rx="10" fill="#0a0f0d"/>
-  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle"
-    font-family="Georgia, serif" font-size="18" font-weight="700"
-    fill="#10b981" letter-spacing="1">MAK</text>
+  <rect width="48" height="48" rx="8" fill="#0a0f0d"/>
+  <!-- M -->
+  <polyline points="5,36 5,12 10,22 15,12 15,36"
+    fill="none" stroke="#10b981" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- A -->
+  <polyline points="18,36 23,12 28,36"
+    fill="none" stroke="#10b981" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="20" y1="26" x2="26" y2="26"
+    stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+  <!-- K -->
+  <line x1="31" y1="12" x2="31" y2="36"
+    stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+  <line x1="31" y1="24" x2="43" y2="12"
+    stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+  <line x1="31" y1="24" x2="43" y2="36"
+    stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
 </svg>
