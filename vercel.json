@@ -1,0 +1,12 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.aybekkaracag.dev" }],
+      "destination": "https://aybekkaracag.dev/",
+      "permanent": true
+    }
+  ]
+}
