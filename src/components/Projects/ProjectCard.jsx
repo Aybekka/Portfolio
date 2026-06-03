@@ -1,25 +1,14 @@
 import { motion } from 'framer-motion';
 import styles from './Projects.module.css';
 
-export default function ProjectCard({ project, index }) {
+export default function ProjectCard({ project }) {
   return (
-    // whileHover on the article lifts the whole card — combining with the CSS glow gives a nice depth effect
-    <motion.article
-      className={styles.card}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      // Multiplying index by 0.12 staggers each card so they don't all arrive at once
-      transition={{ duration: 0.6, ease: 'easeOut', delay: index * 0.12 }}
-      whileHover={{ y: -6 }}
-    >
-      {/* Only the most polished project gets the Featured badge */}
+    <motion.article className={styles.card} whileHover={{ y: -6 }}>
       {project.featured && (
         <span className={styles.featured}>Featured</span>
       )}
 
       <div className={styles.cardHeader}>
-        {/* Folder icon is decorative — aria-hidden keeps it out of screen reader output */}
         <span className={styles.folderIcon} aria-hidden="true">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
             <path d="M3 7C3 5.9 3.9 5 5 5H9.586C9.851 5 10.105 5.105 10.293 5.293L11.707 6.707C11.895 6.895 12.149 7 12.414 7H19C20.1 7 21 7.9 21 9V17C21 18.1 20.1 19 19 19H5C3.9 19 3 18.1 3 17V7Z"
@@ -27,7 +16,6 @@ export default function ProjectCard({ project, index }) {
           </svg>
         </span>
 
-        {/* I render links conditionally so cards without a liveUrl don't show a broken icon */}
         <div className={styles.links}>
           {project.githubUrl && (
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
@@ -37,7 +25,6 @@ export default function ProjectCard({ project, index }) {
             </a>
           )}
           {project.liveUrl && (
-            // rel="noopener noreferrer" is a security best practice for external links
             <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label="Live site">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
@@ -52,7 +39,6 @@ export default function ProjectCard({ project, index }) {
       <h3 className={styles.cardTitle}>{project.title}</h3>
       <p className={styles.cardDesc}>{project.description}</p>
 
-      {/* Tags sit at the bottom so the description has room to breathe above them */}
       <div className={styles.tags}>
         {project.tags.map(tag => (
           <span key={tag} className={styles.tag}>{tag}</span>

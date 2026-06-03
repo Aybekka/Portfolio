@@ -9,11 +9,20 @@ export const projects = [
     tags: ['React', 'Redux Toolkit', 'dnd-kit', 'CSS Modules', 'Framer Motion'],
     liveUrl: 'https://task-planner-six-sandy.vercel.app/',
     githubUrl: 'https://github.com/aybekka/Task.Planner',
-    // featured drives the "Featured" badge — I only mark the most complex project
     featured: true,
   },
   {
     id: 2,
+    title: 'Money.Guard',
+    description:
+      'Personal finance tracker built with a team. Features JWT authentication, protected dashboard routes, income/expense transaction management, balance overview, live Monobank currency rates, and monthly statistics with Chart.js. Built with React 19, Redux Toolkit, and Redux Persist.',
+    tags: ['React', 'Redux Toolkit', 'Chart.js', 'React Hook Form', 'Axios', 'Vite'],
+    liveUrl: 'https://money-guard-client.vercel.app',
+    githubUrl: 'https://github.com/Aybekka/Money.Guard',
+    featured: true,
+  },
+  {
+    id: 3,
     title: 'Tasty.Treats',
     description:
       'Recipe discovery platform built with a 9-person team. Responsible for the Recipe Modal and Rating Popup, integrating the TastyTreats REST API via Axios to fetch recipe details and handle user rating interactions.',
@@ -23,7 +32,7 @@ export const projects = [
     featured: false,
   },
   {
-    id: 3,
+    id: 4,
     title: 'Focus.Frame',
     description:
       'Fully responsive web interface built from scratch using semantic HTML5 and modern CSS. Demonstrates mastery of Flexbox and Grid layouts, hover effects, and smooth animations across all screen sizes.',
